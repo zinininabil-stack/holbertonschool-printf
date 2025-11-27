@@ -13,8 +13,7 @@ int _printf(const char *format, ...)
         {"%", print_percent},
         {NULL, NULL}
     };
-
-    if (!format)
+    if (format == 0)
         return (-1);
 
     va_start(list, format);
@@ -23,22 +22,26 @@ int _printf(const char *format, ...)
     {
         if (format[i] == '%')
         {
-            j = 0;
-            while (printers[j].type)
-            {
-                if (format[i + 1] == *(printers[j].type))
-                {
-                    len = len + printers[j].func(list);
-                    i += 2;
-                    break;
-                }
-                j++;
-            }
-
-            if (printers[j].type == NULL) {
-                len = len + write(1, &format[i], 1);
-                i++;
-            }
+			if (format[i + 1])
+			{
+				j = 0;
+            	while (printers[j].type)
+            	{
+                	if (format[i + 1] == *(printers[j].type))
+                	{
+                    	len = len + printers[j].func(list);
+                    	i += 2;
+                    	break;
+                	}
+                	j++;
+            	}
+            	if (printers[j].type == NULL) {
+                	len = len + write(1, &format[i], 1);
+                	i++;
+        		}
+			}
+			else
+				return (-1);
         }
         else
         {
