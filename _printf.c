@@ -11,8 +11,6 @@ int _printf(const char *format, ...)
 		{"c", print_char},
 		{"s", print_string},
 		{"%", print_percent},
-		{"d", print_int}, //
-		{"i", print_int},
 		{NULL, NULL}};
 	if (format == 0)
 		return (-1);
