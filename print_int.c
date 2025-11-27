@@ -5,5 +5,5 @@
 int print_int(va_list args)
 {
 	int n = va_arg(args, int);
-	return (print_number(n));
+	return (write(1, &n, 1));
 }
