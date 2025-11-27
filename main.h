@@ -11,8 +11,8 @@
  */
 typedef struct checker
 {
-    char *type;
-    int (*func)(va_list);
+	char *type;
+	int (*func)(va_list);
 } checker;
 
 /* Prototypes for _printf and helper functions */
