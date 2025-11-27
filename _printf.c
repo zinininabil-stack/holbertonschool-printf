@@ -4,41 +4,49 @@
 
 int _printf(const char *format, ...)
 {
-	va_list list;
-	int i = 0, j, len = 0;
-	checker printers[] = {
-		{"c", print_char},
-		{"s", print_string},
-		{"%", print_percent},
-		{NULL, NULL}};
+    va_list list;
+    int i = 0, j, len = 0;
 
-	if (!format)
-		return (-1);
+    checker printers[] = {
+        {"c", print_char},
+        {"s", print_string},
+        {"%", print_percent},
+        {NULL, NULL}
+    };
 
-	va_start(list, format);
+    if (!format)
+        return (-1);
 
-	while (format[i] == '\0')
-	{
-		if (format[i] == '%')
-		{
-			j = 0;
-			while (printers[j].type)
-			{
-				if (format[i + 1] == *(printers[j].type))
-				{
-					len += printers[j].func(list);
-					i += 2;
-					break;
-				}
-				j++;
-			}
-			if (printers[j].type == NULL)
-				len += write(1, &format[i++], 1);
-		}
-		else
-			len += write(1, &format[i++], 1);
-	}
+    va_start(list, format);
 
-	va_end(list);
-	return (len);
+    while (format[i] != '\0')
+    {
+        if (format[i] == '%')
+        {
+            j = 0;
+            while (printers[j].type)
+            {
+                if (format[i + 1] == *(printers[j].type))
+                {
+                    len = len + printers[j].func(list);
+                    i += 2;
+                    break;
+                }
+                j++;
+            }
+
+            if (printers[j].type == NULL) {
+                len = len + write(1, &format[i], 1);
+                i++;
+            }
+        }
+        else
+        {
+            len = len + write(1, &format[i], 1);
+            i++;
+        }
+    }
+
+    va_end(list);
+    return (len);
 }
