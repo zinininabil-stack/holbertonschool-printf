@@ -2,18 +2,23 @@
 #define MAIN_H
 
 #include <stdarg.h>
+#include <unistd.h>
 
-/* Structure pour associer un type de format à une fonction */
+/**
+ * struct checker - structure for format specifier and corresponding function
+ * @type: the format specifier as a string
+ * @func: pointer to the function that handles this specifier
+ */
 typedef struct checker
 {
     char *type;
     int (*func)(va_list);
 } checker;
 
-/* Déclarations */
+/* Prototypes for _printf and helper functions */
 int _printf(const char *format, ...);
-int print_char(va_list list);
-int print_string(va_list list);
-int print_percent(va_list list);
+int print_char(va_list args);
+int print_string(va_list args);
+int print_percent(va_list args);
 
-#endif
+#endif /* MAIN_H */
